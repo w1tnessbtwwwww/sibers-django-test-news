@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Django приложение
   web:
     build: .
     container_name: django_app
