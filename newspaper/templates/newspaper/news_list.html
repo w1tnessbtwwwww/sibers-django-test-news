@@ -1,0 +1,64 @@
+
+{% extends 'newspaper/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="mb-4">Лента новостей</h1>
+        
+
+        <div class="mb-3">
+            <form method="get" class="d-flex align-items-center">
+                <label class="me-2">Показывать по:</label>
+                <select name="paginate_by" class="form-select me-2" style="width: auto;" onchange="this.form.submit()">
+                    <option value="10" {% if paginate_by == 10 %}selected{% endif %}>10</option>
+                    <option value="20" {% if paginate_by == 20 %}selected{% endif %}>20</option>
+                    <option value="50" {% if paginate_by == 50 %}selected{% endif %}>50</option>
+                </select>
+            </form>
+        </div>
+
+        {% for item in news %}
+            <div class="card mb-4">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}" style="max-height: 300px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h2 class="card-title">{{ item.title }}</h2>
+                    <p class="text-muted">Опубликовано: {{ item.pub_date|date:"d.m.Y H:i" }}</p>
+                    <p class="card-text">{{ item.content|truncatewords:50 }}</p>
+                    <a href="{% url 'news_detail' item.pk %}" class="btn btn-primary">Читать полностью</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                Новостей пока нет. <a href="{% url 'add_news' %}">Добавить первую новость</a>
+            </div>
+        {% endfor %}
+
+        {% if news.has_other_pages %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if news.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ news.previous_page_number }}&paginate_by={{ paginate_by }}">Назад</a>
+                        </li>
+                    {% endif %}
+
+                    {% for num in news.paginator.page_range %}
+                        <li class="page-item {% if news.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}&paginate_by={{ paginate_by }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if news.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ news.next_page_number }}&paginate_by={{ paginate_by }}">Вперед</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

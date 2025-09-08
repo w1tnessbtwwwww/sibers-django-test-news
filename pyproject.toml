@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "newspaper"
+version = "0.1.0"
+description = ""
+authors = ["xxxw1tnessbtwxxx <89967499+xxxw1tnessbtwxxx@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.2.6"
+pydantic = "^2.11.7"
+pydantic-settings = "^2.10.1"
+asyncpg = "^0.30.0"
+psycopg2-binary = "^2.9.10"
+pillow = "^11.3.0"
+gunicorn = "^23.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
