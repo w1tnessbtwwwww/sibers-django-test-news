@@ -5,4 +5,4 @@ migrate:
 	poetry run python manage.py migrate
 
 build:
-		docker-compose --env-file .env up --build -d
+	docker-compose --env-file .env --project-directory . up --build

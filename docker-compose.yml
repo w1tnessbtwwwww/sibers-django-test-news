@@ -19,7 +19,7 @@ services:
     environment:
       - DEBUG=0
       - DATABASE_URL=postgresql://${DJANGO_POSTGRES_USER}:${DJANGO_POSTGRES_PASSWORD}@db:5434/${DJANGO_POSTGRES_DB}
-      - SECRET_KEY=your-production-secret-key-change-this
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
       - DJANGO_SETTINGS_MODULE=myproject.settings.production
     depends_on:
       - db
